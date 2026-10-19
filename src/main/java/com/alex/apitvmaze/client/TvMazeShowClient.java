@@ -1,6 +1,7 @@
 package com.alex.apitvmaze.client;
 
 import com.alex.apitvmaze.client.dto.TvMazeSearchResult;
+import com.alex.apitvmaze.model.Show;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +24,13 @@ public class TvMazeShowClient implements ShowClient {
                 new ParameterizedTypeReference<List<TvMazeSearchResult>>() {});
 
         return results != null ? results : List.of();
+    }
+
+    @Override
+    public Show getShowById(Long showId) {
+        return apiClient.get(
+                "/shows/" + showId,
+                Map.of(),
+                new ParameterizedTypeReference<Show>() {});
     }
 }
