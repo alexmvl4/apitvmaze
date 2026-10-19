@@ -1,11 +1,13 @@
 package com.alex.apitvmaze.service;
 
 import com.alex.apitvmaze.client.ShowClient;
+import com.alex.apitvmaze.client.dto.TvMazeShow;
 import com.alex.apitvmaze.dto.ShowSearchResponse;
 import com.alex.apitvmaze.mapper.ShowMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ShowService {
@@ -23,7 +25,8 @@ public class ShowService {
         }
 
         return showClient.searchShows(searchQuery.trim()).stream()
-                .filter(result -> result.show() != null)
+                .map(TvMazeShow::show)
+                .filter(Objects::nonNull)
                 .map(showMapper::toSearchResponse)
                 .toList();
     }
