@@ -4,6 +4,7 @@ import com.alex.apitvmaze.client.ShowClient;
 import com.alex.apitvmaze.client.dto.TvMazeSearchResult;
 import com.alex.apitvmaze.dto.ShowSearchResponse;
 import com.alex.apitvmaze.mapper.ShowMapper;
+import com.alex.apitvmaze.model.Show;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +30,13 @@ public class ShowService {
                 .filter(Objects::nonNull)
                 .map(showMapper::toSearchResponse)
                 .toList();
+    }
+
+    public Show getShowById(Long showId) {
+        if (showId == null || showId <= 0) {
+            throw new IllegalArgumentException("El parametro show_id debe ser un numero mayor a cero");
+        }
+
+        return showClient.getShowById(showId);
     }
 }
