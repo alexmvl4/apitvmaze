@@ -7,25 +7,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShowMapper {
 
-    public ShowSearchResponse toSearchResponse(TvMazeShow result) {
+    public ShowSearchResponse toSearchResponse(TvMazeShow.Show show) {
         return new ShowSearchResponse(
-                result.score(),
-                toShow(result.show())
+                show.id(),
+                show.name(),
+                resolveChannel(show),
+                show.summary(),
+                show.genres()
         );
     }
 
-    public ShowSearchResponse.Show toShow(TvMazeShow.Show show) {
-        return new ShowSearchResponse.Show(
-                show.id(),
-                show.name(),
-                show.type(),
-                show.language(),
-                show.genres(),
-                show.status(),
-                show.premiered(),
-                show.rating() != null ? show.rating().average() : null,
-                show.image() != null ? show.image().medium() : null,
-                show.summary()
-        );
+    private String resolveChannel(TvMazeShow.Show show) {
+        if (show.network() != null) {
+            return show.network().name();
+        }
+        if (show.webChannel() != null) {
+            return show.webChannel().name();
+        }
+        return null;
     }
 }
