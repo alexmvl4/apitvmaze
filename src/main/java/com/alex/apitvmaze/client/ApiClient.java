@@ -1,8 +1,10 @@
 package com.alex.apitvmaze.client;
 
 import com.alex.apitvmaze.exception.ExternalServiceException;
+import com.alex.apitvmaze.exception.ResourceNotFoundException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
@@ -26,6 +28,8 @@ public class ApiClient {
                     })
                     .retrieve()
                     .body(responseType);
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new ResourceNotFoundException("No se encontro el recurso solicitado: " + path);
         } catch (RestClientException e) {
             throw new ExternalServiceException("No se pudo realizar la consulta al servicio: " + path, e);
         }
