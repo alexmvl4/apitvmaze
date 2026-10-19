@@ -2,12 +2,13 @@ package com.alex.apitvmaze.client.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record TvMazeShow(
-        Double score
+        Double score,
+        Show show
 ) {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record Show (
@@ -20,19 +21,19 @@ public record TvMazeShow(
         String status,
         Integer runtime,
         Integer averageRuntime,
-        Date premiered,
-        Date ended,
+        LocalDate premiered,
+        LocalDate ended,
         String officialSite,
         Schedule schedule,
         Rating rating,
         Integer weight,
         Network network,
-        String webChannel,
-        String dvdCountry,
-        External external,
+        Network webChannel,
+        Network.Country dvdCountry,
+        Externals externals,
         Image image,
         String summary,
-        Integer updated
+        Long updated
     ) {
         @JsonIgnoreProperties(ignoreUnknown = true)
         public record Schedule(
@@ -42,7 +43,7 @@ public record TvMazeShow(
 
         @JsonIgnoreProperties(ignoreUnknown = true)
         public record Rating(
-          NullPointerException average
+                Double average
         ) {}
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -61,10 +62,10 @@ public record TvMazeShow(
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
-        public record External(
-                NullPointerException tvrage,
+        public record Externals(
+                Integer tvrage,
                 Integer thetvdb,
-                NullPointerException imdb
+                String imdb
         ){}
 
         @JsonIgnoreProperties(ignoreUnknown = true)
