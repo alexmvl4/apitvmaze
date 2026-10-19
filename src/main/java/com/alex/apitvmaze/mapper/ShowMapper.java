@@ -1,13 +1,13 @@
 package com.alex.apitvmaze.mapper;
 
-import com.alex.apitvmaze.client.dto.TvMazeShow;
 import com.alex.apitvmaze.dto.ShowSearchResponse;
+import com.alex.apitvmaze.model.Show;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ShowMapper {
 
-    public ShowSearchResponse toSearchResponse(TvMazeShow.Show show) {
+    public ShowSearchResponse toSearchResponse(Show show) {
         return new ShowSearchResponse(
                 show.id(),
                 show.name(),
@@ -17,7 +17,7 @@ public class ShowMapper {
         );
     }
 
-    private String resolveChannel(TvMazeShow.Show show) {
+    private String resolveChannel(Show show) {
         if (show.network() != null) {
             return show.network().name();
         }
