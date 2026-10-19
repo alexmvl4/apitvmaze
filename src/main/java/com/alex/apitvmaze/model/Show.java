@@ -1,13 +1,16 @@
 package com.alex.apitvmaze.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Document(collection = "shows")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Show(
-        Long id,
+        @Id Long id,
         String url,
         String name,
         String type,
