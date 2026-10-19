@@ -1,6 +1,7 @@
 package com.alex.apitvmaze.mapper;
 
 import com.alex.apitvmaze.dto.CommentResponse;
+import com.alex.apitvmaze.dto.ShowDetailResponse;
 import com.alex.apitvmaze.dto.ShowSearchResponse;
 import com.alex.apitvmaze.model.Show;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,10 @@ public class ShowMapper {
                 show.genres(),
                 comments
         );
+    }
+
+    public ShowDetailResponse toDetailResponse(Show show, List<CommentResponse> comments) {
+        return new ShowDetailResponse(show, comments);
     }
 
     private String resolveChannel(Show show) {
