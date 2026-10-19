@@ -2,11 +2,13 @@ package com.alex.apitvmaze.client;
 
 import com.alex.apitvmaze.exception.ExternalServiceException;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
 import java.util.Map;
 
+@Component
 public class ApiClient {
     private final RestClient restClient;
 
@@ -25,7 +27,7 @@ public class ApiClient {
                     .retrieve()
                     .body(responseType);
         } catch (RestClientException e) {
-            throw new ExternalServiceException("No se puedo realizar la consulta al servicio: " + path, e);
+            throw new ExternalServiceException("No se pudo realizar la consulta al servicio: " + path, e);
         }
     }
 }
