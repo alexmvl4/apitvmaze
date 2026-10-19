@@ -5,6 +5,7 @@ import com.alex.apitvmaze.client.dto.TvMazeSearchResult;
 import com.alex.apitvmaze.dto.ShowSearchResponse;
 import com.alex.apitvmaze.mapper.ShowMapper;
 import com.alex.apitvmaze.model.Show;
+import com.alex.apitvmaze.repository.ShowRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +15,12 @@ import java.util.Objects;
 public class ShowService {
     private final ShowClient showClient;
     private final ShowMapper showMapper;
+    private final ShowRepository showRepository;
 
-    public ShowService(ShowClient showClient, ShowMapper showMapper) {
+    public ShowService(ShowClient showClient, ShowMapper showMapper, ShowRepository showRepository) {
         this.showClient = showClient;
         this.showMapper = showMapper;
+        this.showRepository = showRepository;
     }
 
     public List<ShowSearchResponse> searchShows(String searchQuery) {
@@ -37,6 +40,7 @@ public class ShowService {
             throw new IllegalArgumentException("El parametro show_id debe ser un numero mayor a cero");
         }
 
-        return showClient.getShowById(showId);
+        return showRepository.findById(showId)
+                .orElseGet(() -> showRepository.save(showClient.getShowById(showId)));
     }
 }
