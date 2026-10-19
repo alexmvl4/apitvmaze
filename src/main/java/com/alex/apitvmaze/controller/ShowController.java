@@ -1,7 +1,7 @@
 package com.alex.apitvmaze.controller;
 
+import com.alex.apitvmaze.dto.ShowDetailResponse;
 import com.alex.apitvmaze.dto.ShowSearchResponse;
-import com.alex.apitvmaze.model.Show;
 import com.alex.apitvmaze.service.ShowService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +26,7 @@ public class ShowController {
     }
 
     @GetMapping("/{show_id}")
-    public Show getShow(@PathVariable("show_id") Long showId) {
-        return showService.getShowById(showId);
+    public ShowDetailResponse getShow(@PathVariable("show_id") Long showId) {
+        return showService.getShowDetail(showId);
     }
 }

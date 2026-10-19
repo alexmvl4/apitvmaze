@@ -3,6 +3,7 @@ package com.alex.apitvmaze.service;
 import com.alex.apitvmaze.client.ShowClient;
 import com.alex.apitvmaze.client.dto.TvMazeSearchResult;
 import com.alex.apitvmaze.dto.CommentResponse;
+import com.alex.apitvmaze.dto.ShowDetailResponse;
 import com.alex.apitvmaze.dto.ShowSearchResponse;
 import com.alex.apitvmaze.mapper.CommentMapper;
 import com.alex.apitvmaze.mapper.ShowMapper;
@@ -50,6 +51,16 @@ public class ShowService {
         return shows.stream()
                 .map(show -> showMapper.toSearchResponse(show, commentsByShow.getOrDefault(show.id(), List.of())))
                 .toList();
+    }
+
+    public ShowDetailResponse getShowDetail(Long showId) {
+        Show show = getShowById(showId);
+
+        List<CommentResponse> comments = commentRepository.findByShowId(showId).stream()
+                .map(commentMapper::toResponse)
+                .toList();
+
+        return showMapper.toDetailResponse(show, comments);
     }
 
     public Show getShowById(Long showId) {
